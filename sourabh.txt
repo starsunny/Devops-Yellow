@@ -1,0 +1,56 @@
+Squid and Proxy ---- (Default port is 3128)
+#############################################	
+	it generally installed on a seperate server. It works by tracking objects use over the network.
+	squid acts as intermediary, simply passing the clients request on the server and saving a copy of
+	requested objects, if the same client or multiple clients request the same object before it expires from 
+	squid's cache.
+	it accelerate the download & save bandwidth.
+
+Installation :-
+###############
+	$ sudo apt-get install squid -y
+	$ sudo service squid start
+
+Configuration file :-
+#####################
+	$ vim /etc/squid/squid.conf
+
+
+If we want to make changes then we have to write that changes in configuration file..
+
+Examples:-
+#########
+	1.Block Websites from particular Ip
+		> acl sunny src 192.168.1.0         (Here, sunny is username and 192.168.1.0 is own Ip)		
+		> acl blocked_website dstdomain .facebook.com .twitter.com   (Here, blocked website is just a name) 
+		> http_access deny blocked_website
+
+	** If we want to allow that particular user for particular website than just make it allow 
+
+	2.Block particular site to particular website
+		>> just write the one url to "acl blocked_website dstdomain .facebook.com"
+
+	3.Block Many IPs of same network to one website 
+		>>  acl sunny src 192.168.1.0/24
+		>>  acl blocked_website dstdomain .twitter.com
+		>>  http_access deny blocked_website
+
+
+	4.Many Users
+	______________
+	acl sunny 192.168.1.0 
+	http_access deny .yahoo.com all !sunny !sunny1     (Here sunny and sunny1 are users which are seperated by !)
+
+
+>>>if we want to include a file then we use include keyword
+include <filename>
+>>>Another keyword is Parameter
+acl whitelist dstdomain parameters("PATTH of FILE")
+
+
+***Timing Constraint****
+
+acl networks src 192.168.1.0/24
+acl time MTWHF 16:00-8:00     (these website accessible only from 18:00 to 08:00)
+htpp_access allow .facebook time allow networks
+ 
