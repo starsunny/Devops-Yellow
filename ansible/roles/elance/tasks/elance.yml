@@ -1,0 +1,83 @@
+---
+- hosts: web
+  become_user: root
+  tasks:
+  - name: Configuring Elance Tracket
+    apt: name={{ item }} update_cache=yes state=present
+    with_items: 
+     - libgtk2.0-0:i386 
+     - libstdc++6:i386
+     - libnss3-1d:i386 
+    # - liib32nss-mdns* 
+     - libxml2:i386 
+     - libxslt1.1:i386 
+     - libcanberra-gtk-module:i386 
+     - gtk2-engines-murrine:i386
+    
+    
+  #- name: Changing the directory to temp
+   # command: cd /
+    
+  - name: Download libgnome key ring
+    get_url:
+      url: http://in.archive.ubuntu.com/ubuntu xenial/main i386 libgnome-keyring0 i386 3.12.0-1build1
+      dest: /tmp
+    
+  - name: Install the package libgnome    
+    apt: 
+     deb: "/tmp/*"    
+
+
+
+#shell: name= {{ item }}
+    #with_items: 
+        #- cd /tmp
+        #- dpkg-ideb -R libgnome-keyring0_3.8.0-2_i386.deb 
+        #- gnome-keyring
+  
+  - name: Copying the ring now
+    command: cp gnome-keyring/usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/i386-linux-gnu/
+  
+  - name: soft links
+    command: name= {{ item }}
+    with_items:
+         - ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/i386-linux-gnu/libgnome-keyring.so.0
+         - ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0 /usr/lib/libgnome-keyring.so.0
+         - ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/libgnome-keyring.so.0.2.0
+  
+  - name: Installing adobe air
+    get_url:
+     url: http://airdownload.adobe.com/air/lin/download/2.6/AdobeAIRInstaller.bin
+     dest: /temp
+     force_basic_auth: yes
+  
+  - name: Executing external commands 
+    command: name= {{ item }}
+    with_items:
+      - chmod a+x AdobeAIRInstaller.bin
+      - ./AdobeAIRInstaller.bin
+      - rm ./AdobeAIRInstaller.bin
+      - rm /usr/lib/libgnome-keyring.so.0
+      - rm /usr/lib/libgnome-keyring.so.0.2.0
+   
+  - name: Extra one
+    get_url:
+     url: https://www.elance.com/tracker/TrackerSetup.deb
+     dest: /tmp
+     
+  - name: Finalise
+    command: dpkg -i TrackerSetup.deb
+
+ 
+
+
+
+      
+
+
+
+
+
+
+
+

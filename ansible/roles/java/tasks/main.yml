@@ -1,0 +1,9 @@
+---
+# tasks file for java
+- hosts: web
+  tasks:
+  - name: Installs Java and Chromium Browser
+    apt: pkg= {{ item }} state=installed update_cache=true
+    with_items:
+      - openjdk-8*
+      - chromium-browser

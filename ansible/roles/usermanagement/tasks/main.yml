@@ -1,0 +1,15 @@
+---
+# tasks file for usermanagement
+- hosts: web
+  become_user: root
+
+  tasks:
+   - name: Create admin user
+     user:
+      name=Admin
+      state=present
+      password="samsung"
+      shell=/bin/bashi
+     when: user = "root"
+
+

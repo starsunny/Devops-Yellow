@@ -1,0 +1,25 @@
+---
+- name: Create
+  hosts: web
+  become_user: sudo
+  tasks:
+  - name: Wine
+    apt: name=wine state=present update_cache=true
+    notify: 
+         - start Wine
+
+  - name: Execute  
+    command: name= {{ item }} 
+    with_items:
+         - mkdir -p ~/build/safari
+         - cd  ~/build/safari 
+    
+  - name: Download
+    get_url: 
+      url: http://appldnld.apple.com/Safari5/041-5487.20120509.INU8B/SafariSetup.exe
+      dest: ~/build/safari
+      force_basic_auth: yes	    
+
+
+         
+         - wine SafariSetup.exe

@@ -1,0 +1,14 @@
+---
+- hosts: web
+  tasks:
+  - name: uninstall nginx web server
+    apt: pkg=nginx* state=absent update_cache=true
+#    notify:
+ #      - start nginx
+
+#  handlers:
+ #      - name: start nginx
+  #       service:
+   #           name: nginx  
+    #          state: started
+

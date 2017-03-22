@@ -1,0 +1,25 @@
+---
+# tasks file for other
+- name: All Required S/w
+  hosts: web
+  become_user: root
+  tasks:
+  - name: Other Tools
+    apt: pkg= {{ item }} state=present update_cache=true
+      - dconf-tools 
+      - ssh
+      - filezilla  #ftp client
+      -	htop  # network tool
+      -	vim  # editor
+      -	diffuse  # compare file
+      -	bmon 
+      -	meld # compare tool
+      -	wine*  #Wine
+      -	slack  # slack 
+      -	xpad  # Xpad
+      -	shutter  # Screen Shot Tool
+      -	vim  # Editor
+      -	geany  #Editor
+
+
+

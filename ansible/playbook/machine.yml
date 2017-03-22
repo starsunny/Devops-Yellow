@@ -1,0 +1,55 @@
+---
+- hosts: web
+  name: Setup Developer's Machine
+  become_user: root
+
+  tasks:
+  
+
+        - name: Create admin user
+          user:
+           name=Admin
+           state=present
+           password="samsung"
+           shell=/bin/bash
+
+        - name: Create user for admin
+          user:
+           name=Ubuntu
+           state=present
+           password="ubuntu"
+           shell=/bin/bash
+           groups=Admin
+           #command: usermod -a -G www-data Ubuntu
+    
+
+        - name: Install Apache
+          apt: pkg={{ item }} state=present update_cache=true
+          with_items:
+           - apache2 libapache2-mod-xsendfile apache2-mpm-itk
+           - a2enmod rewrite
+          notify: start Apache
+          service: name=httpd state=started
+
+
+
+
+
+
+
+
+
+
+  # - name: Install Php
+
+
+
+
+
+
+
+
+
+
+
+  # - name: Install Mysql

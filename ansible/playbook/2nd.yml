@@ -1,0 +1,8 @@
+---
+ - name: "Copy files"
+   hosts: web
+   user: root
+   tasks:
+     - name: "copying"
+       copy: src=/home/sunny/ansible_hosts dest=/etc/ansible/
+

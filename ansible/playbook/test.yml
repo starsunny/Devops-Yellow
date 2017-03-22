@@ -1,0 +1,7 @@
+---
+ - name: RUn commands
+   hosts: web
+   sudo: Yes
+   tasks:
+   - name: Execute script
+     command: fdisk -l > /home/yospl10/Desktop/sunny.txt

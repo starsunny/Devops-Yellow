@@ -1,0 +1,9 @@
+---
+  - hosts: web
+    sudo: yes
+    tasks:
+     - name: "Installing s/w using python"
+       copy: src=/etc/ansible/playbook/allinone.python dest=/etc/ mode=777
+     - name: Execute script
+       command: python /etc/allinone.python
+
