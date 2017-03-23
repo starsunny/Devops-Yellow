@@ -1,0 +1,44 @@
+---
+- name: Install list of packages for Team viewer
+  hosts: web
+  become_user: root
+  tasks:
+  - name: Execute
+    apt: name= {{ item }} update_cache=yes state=latest
+    with_items:
+      - libxtst6:i386
+      - gcc-4.8-base:i386
+      - libc6:i386
+      - libgcc1:i386
+      - libx11-6:i386
+      - libxau6:i386
+      - libxcb1:i386
+      - libxdmcp6:i386
+      - libxext6:i386
+      - libjpeg62:i386
+      - libxinerama1:i386
+      - software-properties-common
+  
+  - name: Create Directroy
+    file: path=/home/teamviewer state=directory owner=root group=root mode=0777
+  
+  - name: Downloading
+    get_url:
+     url: http://download.teamviewer.com/download/teamviewer_amd64.deb
+     dest: /home/teamviewer/
+ 
+#   register: out
+
+#  - debug: var=out.stdout_lines
+
+  - name: Installing Teamviewer...
+    command: dpkg -i /home/teamviewer/teamviewer_amd64.deb && sudo apt-get -f install
+
+    
+ # - name: Install Teamviewer
+  #  apt: 
+   #  state: present 
+    # deb: "teamviewer_amd64.deb"
+
+
+

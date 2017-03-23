@@ -1,0 +1,19 @@
+---
+- tasks:
+   - name: Wine
+     apt: name=wine state=present update_cache=true
+     notify: 
+         - start Wine
+
+   - name: Creates directory
+     file: path=/home/build/safari state=directory owner=root group=root mode=0777
+ 
+   - name: Download
+     get_url: 
+       url: http://appldnld.apple.com/Safari5/041-5487.20120509.INU8B/SafariSetup.exe
+       dest: /home/build/safari
+       force_basic_auth: yes	    
+
+
+   - name: installing       
+     command: wine /home/build/safari/SafariSetup.exe

@@ -1,6 +1,11 @@
 ---
 - hosts: web
   become_user: root
+  #vars: 
+   # deb_packages: 
+    # - /tmp/libgnome-keyring0_3.2.2-2_i386.deb
+     #- /tmp/libgnome-keyring0_3.12.0-1build1_i386.deb
+
   tasks:
   - name: Configuring Elance Tracket
     apt: name={{ item }} update_cache=yes state=present
@@ -15,17 +20,23 @@
      - gtk2-engines-murrine:i386
     
     
-  #- name: Changing the directory to temp
-   # command: cd /
+  - name: Changing the directory to temp
+    command: chdir="/tmp/" ls
     
   - name: Download libgnome key ring
     get_url:
-      url: http://in.archive.ubuntu.com/ubuntu xenial/main i386 libgnome-keyring0 i386 3.12.0-1build1
-      dest: /tmp
+      url: http://archive.ubuntu.com/ubuntu/pool/main/libg/libgnome-keyring/libgnome-keyring0_3.2.2-2_i386.deb
+      dest: "/tmp/"
     
   - name: Install the package libgnome    
-    apt: 
-     deb: "/tmp/*"    
+    command: dpkg -i /tmp/libgnome-keyring0_3.2.2-2_i386.deb 
+    
+
+   #sudo: true 
+    #apt:     
+     #deb: "libgnome-keyring0_3.2.2-2_i386.deb"
+     #state: installed
+   #  with_indexed_items: deb_packages
 
 
 

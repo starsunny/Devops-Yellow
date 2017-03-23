@@ -10,6 +10,6 @@
       state=present
       password="samsung"
       shell=/bin/bashi
-     when: user = "root"
+
 
 

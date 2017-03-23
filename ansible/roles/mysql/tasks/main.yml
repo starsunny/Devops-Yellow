@@ -7,7 +7,7 @@
   - name: Installing
     apt: pkg=mysql-server* state=present update_cache=yes
   - name: Execute  
-    command: name= {{ item }}
+    shell: name= {{ item }}
     with_items:
       - echo mysql-server-5.1 mysql-server/root_password password root| debconf-set-selections
       - echo mysql-server-5.1 mysql-server/root_password_again password root| debconf-set-selections
